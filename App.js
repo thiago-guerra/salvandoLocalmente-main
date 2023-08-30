@@ -14,7 +14,8 @@ export default function App() {
   const [notaSelecionada, setNotaSelecionada] = useState({});
   const [notas, setNotas] = useState([]);
   const [categoria, setCategoria] = useState("Todos");
-
+  const categorias = {Pessoal: "#FF924F", Outros: "#00911F", Trabalho: "#2F71EB", Todos: "#ffffff"};
+  const estilo  =  styleFunction(categorias[categoria]);
   async function ObterNotas() {
     const notas = await buscaNotas();
     setNotas(notas);
@@ -30,7 +31,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={estilos.container}>
-      <Picker style={estilos.picker}
+      <Picker style={estilo.filtro}
         selectedValue={categoria}
         onValueChange={(novaCategoria) => {
           FiltrarNotas(novaCategoria);
@@ -60,10 +61,12 @@ const estilos = StyleSheet.create({
     alignItems: "stretch",
     justifyContent: "flex-start",
   },
-  picker: {
-    backgroundColor: '#FF9A94',
+})
+
+const styleFunction = (cor) => StyleSheet.create({
+  filtro: {
+    backgroundColor: cor,
     margin: 20,
     borderWidth: 20
   }
-})
-
+});
